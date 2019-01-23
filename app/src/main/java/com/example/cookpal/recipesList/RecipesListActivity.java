@@ -41,13 +41,15 @@ public class RecipesListActivity extends AppCompatActivity {
     }
 
     public void AddButtonClick(View view) {
-        CreateRecipeStep2.open(this);
+        CreateRecipeStep1.open(this);
     }
 
     private void setupToolbar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 

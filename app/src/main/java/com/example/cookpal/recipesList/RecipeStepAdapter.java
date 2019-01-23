@@ -55,11 +55,11 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
             public void onClick(View view) {
                 if(isArrowDown){
                     snippet.setVisibility(View.VISIBLE);
-                    arrow.setImageResource(R.drawable.arrow_up);
+                    arrow.setImageResource(R.drawable.ic_arrow_drop_up_black_24dp);
                     isArrowDown = false;
                 }else{
                     snippet.setVisibility(View.GONE);
-                    arrow.setImageResource(R.drawable.arrow_down);
+                    arrow.setImageResource(R.drawable.ic_arrow_drop_down_black_24dp);
                     isArrowDown = true;
                 }
 
@@ -73,9 +73,6 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
 
             snippet = itemView.findViewById(R.id.snippet);
             arrow.setOnClickListener(arrowEvent);
-
         }
-
-
     }
 }

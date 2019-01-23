@@ -131,7 +131,7 @@ public class CreateRecipeStep2 extends AppCompatActivity {
     private void setupToolbar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Recording");
+            actionBar.setTitle("Recording new recipe");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="categories">
+        <item>Categories</item>
+        <item>Breakfast</item>
+        <item>Main Dish</item>
+        <item>Snacks</item>
+        <item>Dessert</item>
+        <item>Other</item>
+    </string-array>
+</resources>
