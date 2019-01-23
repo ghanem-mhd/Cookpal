@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CookPal</string>
     <string name="title_activity_recipe_overview">RecipeOverview</string>
+    <string name="title_activity_follow_recipe">FollowRecipe</string>
 </resources>

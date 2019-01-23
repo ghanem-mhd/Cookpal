@@ -1,5 +1,6 @@
 package com.example.cookpal.recipesList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cookpal.R;
+import com.example.cookpal.followRecipe.FollowRecipe;
 import com.example.cookpal.models.RecipeDetails;
 import com.example.cookpal.utilities.RecipeFactory;
 
@@ -86,6 +88,7 @@ public class RecipeOverview extends AppCompatActivity implements TabLayout.BaseO
 
     @Override
     public void onClick(View view) {
-        //Todo: navigate to another view
+        Intent intent = new Intent(this, FollowRecipe.class);
+        startActivity(intent);
     }
 }
