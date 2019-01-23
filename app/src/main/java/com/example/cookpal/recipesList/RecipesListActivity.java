@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.View;
 
 import com.example.cookpal.R;
+import com.example.cookpal.createRecipe.CreateRecipeStep1;
+import com.example.cookpal.createRecipe.CreateRecipeStep2;
 import com.example.cookpal.models.Recipe;
 import com.example.cookpal.utilities.EqualSpacingItemDecoration;
 import com.example.cookpal.utilities.ScreenUtils;
@@ -39,7 +41,7 @@ public class RecipesListActivity extends AppCompatActivity {
     }
 
     public void AddButtonClick(View view) {
-
+        CreateRecipeStep2.open(this);
     }
 
     private void setupToolbar() {

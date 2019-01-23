@@ -9,4 +9,13 @@
     <color name="colorAccent">#00ACF3</color>
     <color name="colorAccentDark">#0686bf</color>
 
+    <color name="primary_text">#454545</color>
+    <color name="divider">#eaeaea</color>
+    <color name="secondary_text">#444444</color>
+
+    <color name="color1">#3164d7</color>
+    <color name="color2">#d92d29</color>
+    <color name="color3">#eeaa10</color>
+    <color name="color4">#3164d7</color>
+    <color name="color5">#2e9641</color>
 </resources>
