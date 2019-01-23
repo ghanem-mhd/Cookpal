@@ -1,6 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="6dp"
+        android:text="10"
+        android:textColor="@color/colorAccentDark"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintBaseline_toBaselineOf="@+id/step"
+        app:layout_constraintEnd_toStartOf="@+id/step"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/step"
+        android:layout_width="333dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="3dp"
+        android:text="Preheat oven to 200° C"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/arrow"
+        app:layout_constraintStart_toEndOf="@+id/number"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/arrow"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="3dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/step"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow-down" />
+
+    <LinearLayout
+        android:id="@+id/step-content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arrow"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/number2"
+                android:layout_width="30dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="6dp"
+                android:text="10"
+                android:textColor="@color/colorAccentDark"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/step2"
+                android:layout_width="333dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:minHeight="38dp"
+                android:text="Preheat oven to 200° C Preheat oven to 200° CPreheat oven to 200° CPreheat oven to 200° C"
+                android:textSize="20sp" />
+
+            <ImageButton
+                android:id="@+id/arrow2"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                app:srcCompat="@drawable/arrow-up" />
+
+        </LinearLayout>
+
+        <VideoView
+            android:id="@+id/snippet"
+            android:layout_width="120dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
