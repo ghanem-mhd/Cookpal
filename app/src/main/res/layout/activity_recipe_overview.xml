@@ -7,6 +7,6 @@
     tools:context=".recipesList.RecipeOverview">
 
 
-    <include layout="@layout/content_recipe_overview_2" />
+    <include layout="@layout/content_recipe_overview" />
 
 </android.support.design.widget.CoordinatorLayout>

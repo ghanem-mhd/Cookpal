@@ -5,6 +5,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,43 +23,57 @@ import java.util.List;
 
 public class RecipeOverview extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener, View.OnClickListener {
 
-    private RecyclerView list;
     private Button btnStartCooking;
     private TabLayout tabLayout;
     private TextView title;
     private RecipeDetails recipe;
 
+    private FragmentManager fragmentManager;
+    private boolean isIngredientsSelected;
+
+    private  RecyclerView.Adapter adapterIngredients;
+    private  RecyclerView.Adapter adapterSteps;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_overview);
-     //   Toolbar toolbar = findViewById(R.id.toolbar);
-      //  setSupportActionBar(toolbar);
 
-        list = (RecyclerView) findViewById(R.id.list);
+
         btnStartCooking = (Button) findViewById(R.id.btn_start_cooking);
         tabLayout = (TabLayout) findViewById(R.id.tab);
         tabLayout.addOnTabSelectedListener(this);
         title = (TextView) findViewById(R.id.title);
-
         recipe = RecipeFactory.getSalmonRecipe();
         title.setText(recipe.getRecipe().title);
-
         btnStartCooking.setOnClickListener(this);
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.fragment, new RecipeIngredientsFragment()).commit();
+        isIngredientsSelected = true;
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
-        if(tab.getText().equals("Ingredients")){
-            List<RecipeDetails.Ingredient> ingredients = recipe.getIngredients();
-            list.setAdapter(new RecipeIngredientAdapter(ingredients));
+        if(tab.getText().equals("Ingredients") && !isIngredientsSelected){
 
-        }else if(tab.getText().equals("Steps")){
-            List<RecipeDetails.Step> steps = recipe.getSteps();
-            list.setAdapter(new RecipeStepAdapter(steps));
+            System.out.println("TEST 1");
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment, new RecipeIngredientsFragment())
+                    .addToBackStack(null)
+                    .commit();
+            isIngredientsSelected = true;
+
+        }else if(tab.getText().equals("Steps") && isIngredientsSelected){
+
+            System.out.println("TEST 2");
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment, new RecipeStepsFragment())
+                    .addToBackStack(null)
+                    .commit();
+            isIngredientsSelected = false;
         }
-
     }
 
     @Override
