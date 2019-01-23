@@ -1,6 +1,7 @@
 package com.example.cookpal.recipesList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,7 +37,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
     @Override
     public void onBindViewHolder(@NonNull RecipesAdapterViewHolder recipesAdapterViewHolder, int i) {
         Recipe recipe = recipeList.get(i);
-
 
 
         recipesAdapterViewHolder.title.setText(recipe.title);
@@ -102,6 +102,15 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
 
             authorImage = itemView.findViewById(R.id.recipe_item_author_image);
             authorName = itemView.findViewById(R.id.recipe_item_author_name);
+
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("On click Action");
+                    Intent intent = new Intent(context, RecipeOverview.class);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

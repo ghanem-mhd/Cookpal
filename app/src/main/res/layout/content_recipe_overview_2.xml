@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:src="@drawable/recipe1"
+        android:layout_marginTop="0dp"
+        />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/img"
+        android:layout_alignEnd="@id/img"
+        android:layout_alignBottom="@id/img"
+        android:background="@drawable/horizontal_gradient" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="Salmon Roasted in Button"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccentLight"
+        android:textSize="28sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <Button
+        android:id="@+id/btn-start-cooking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="start cooking"
+        android:layout_below="@id/img"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tab"
+        android:layout_below="@id/btn-start-cooking"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        >
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab-ingredients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingredients" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab-steps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steps" />
+
+    </android.support.design.widget.TabLayout>
+
+</RelativeLayout>
