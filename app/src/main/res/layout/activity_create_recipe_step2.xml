@@ -8,29 +8,105 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <com.camerakit.CameraKitView
-        android:id="@+id/camera"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:keepScreenOn="true"
-        app:camera_facing="back"
-        app:camera_flash="auto"
-        app:camera_focus="continuous"
-        app:camera_permissions="camera"
-        android:layout_weight="0.5"/>
-    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5">
 
-        <com.github.zagum.speechrecognitionview.RecognitionProgressView
-            android:id="@+id/recognition_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"/>
+        <com.camerakit.CameraKitView
+            android:id="@+id/camera"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:keepScreenOn="true"
+            app:camera_facing="back"
+            app:camera_flash="auto"
+            app:camera_focus="continuous"
+            app:camera_permissions="camera" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/horizontal_gradient" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            tools:ignore="DisableBaselineAlignment">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2">
+
+                <ImageView
+                    android:id="@+id/facingButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_facing_front"
+                    android:tint="#EEFFFFFF"
+                    tools:ignore="ContentDescription" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6">
+
+                <com.github.zagum.speechrecognitionview.RecognitionProgressView
+                    android:id="@+id/recognition_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"/>
+
+            </FrameLayout>
+
+
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2">
+
+                <ImageView
+                    android:id="@+id/flashButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_flash_on"
+                    android:tint="#EEFFFFFF" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+
+
+        <com.stfalcon.chatkit.messages.MessagesList
+            android:id="@+id/messagesList"
+            android:layout_width="match_parent"
+            app:outcomingDefaultBubbleColor="@color/colorAccent"
+            android:layout_height="match_parent" />
+
+
 
     </RelativeLayout>
 

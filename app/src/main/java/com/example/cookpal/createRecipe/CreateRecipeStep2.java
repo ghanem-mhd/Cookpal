@@ -2,48 +2,86 @@ package com.example.cookpal.createRecipe;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
+import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.camerakit.CameraKitView;
 import com.example.cookpal.R;
+import com.example.cookpal.models.Message;
+import com.example.cookpal.models.User;
 import com.github.zagum.speechrecognitionview.RecognitionProgressView;
-import com.github.zagum.speechrecognitionview.adapters.RecognitionListenerAdapter;
 import com.mapzen.speakerbox.Speakerbox;
-import com.maxwell.speechrecognition.OnSpeechRecognitionListener;
-import com.maxwell.speechrecognition.OnSpeechRecognitionPermissionListener;
-import com.maxwell.speechrecognition.SpeechRecognition;
-import com.vikramezhil.droidspeech.DroidSpeech;
-import com.vikramezhil.droidspeech.OnDSListener;
+import com.stfalcon.chatkit.commons.ImageLoader;
+import com.stfalcon.chatkit.messages.MessagesList;
+import com.stfalcon.chatkit.messages.MessagesListAdapter;
 
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-public class CreateRecipeStep2 extends AppCompatActivity implements OnDSListener, OnSpeechRecognitionPermissionListener, OnSpeechRecognitionListener {
+import java.util.UUID;
+
+public class CreateRecipeStep2 extends AppCompatActivity {
 
     private static final String TAG = CreateRecipeStep2.class.getSimpleName();
 
     private CameraKitView cameraKitView;
     private RecognitionProgressView recognitionProgressView;
-    private DroidSpeech droidSpeech;
     private Speakerbox speakerbox;
-    private  SpeechRecognition speechRecognition;
+    private MessagesList messagesList;
+    protected ImageLoader imageLoader;
+    protected MessagesListAdapter<Message> messagesAdapter;
+
+    private User app,user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_recipe_step2);
 
+        speakerbox = new Speakerbox(getApplication());
+
+        imageLoader = new ImageLoader() {
+            @Override
+            public void loadImage(ImageView imageView, String url, Object payload) {
+                if (url.equals("1")){
+                    imageView.setImageResource(R.drawable.user1);
+                }else {
+                    imageView.setImageResource(R.drawable.user2);
+                }
+            }
+        };
+
+        app = new User("1","Cookpal","1",true);
+        user = new User("0","Wei","0",true);
+
+        findViews();
+
+        setUpViews();
+
+        setupToolbar();
+
+        initAdapter();
+
+        appSays("Hello I am your cooking assistance I will help you cooking this recipe", 2);
+        appSays("How much salt did you add", 10);
+        userSays("I have added 10 gram of salt",12);
+        appSays("Okay",13);
+    }
+
+
+
+    private void findViews() {
+        messagesList = findViewById(R.id.messagesList);
         recognitionProgressView = findViewById(R.id.recognition_view);
         cameraKitView = findViewById(R.id.camera);
+    }
 
+    private void setUpViews() {
         int[] colors = {
                 ContextCompat.getColor(this, R.color.color1),
                 ContextCompat.getColor(this, R.color.color2),
@@ -51,33 +89,12 @@ public class CreateRecipeStep2 extends AppCompatActivity implements OnDSListener
                 ContextCompat.getColor(this, R.color.color4),
                 ContextCompat.getColor(this, R.color.color5)
         };
-
         recognitionProgressView.setColors(colors);
-
-        setupToolbar();
-
-        startListening();
-
-        speakerbox = new Speakerbox(getApplication());
-
-        AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        //audio.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-    }
-
-    private void startListening() {
         recognitionProgressView.play();
-        droidSpeech = new DroidSpeech(this, null);
-        droidSpeech.setOnDroidSpeechListener(this);
-        droidSpeech.startDroidSpeechRecognition();
-
-        speechRecognition = new SpeechRecognition(this);
-        speechRecognition.setSpeechRecognitionPermissionListener(this);
-        speechRecognition.setSpeechRecognitionListener(this);
-        //speechRecognition.startSpeechRecognition();
     }
 
-    public static void open(Context context){
-        Intent intent = new Intent(context,CreateRecipeStep2.class);
+    public static void open(Context context) {
+        Intent intent = new Intent(context, CreateRecipeStep2.class);
         context.startActivity(intent);
     }
 
@@ -102,13 +119,11 @@ public class CreateRecipeStep2 extends AppCompatActivity implements OnDSListener
     @Override
     protected void onStop() {
         cameraKitView.onStop();
-        droidSpeech.closeDroidSpeechOperations();
-        speechRecognition.stopSpeechRecognition();
         super.onStop();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -124,7 +139,7 @@ public class CreateRecipeStep2 extends AppCompatActivity implements OnDSListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if ( id == android.R.id.home ) {
+        if (id == android.R.id.home) {
             finish();
             return true;
         }
@@ -137,70 +152,32 @@ public class CreateRecipeStep2 extends AppCompatActivity implements OnDSListener
         return true;
     }
 
-    @Override
-    public void onDroidSpeechSupportedLanguages(String currentSpeechLanguage, List<String> supportedSpeechLanguages) {
 
+    private void appSays(final String sentence, int delayInSeconds) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Message message = new Message(Long.toString(UUID.randomUUID().getLeastSignificantBits()),app,sentence);
+                messagesAdapter.addToStart(message, true);
+                speakerbox.play(sentence);
+            }
+        }, 1000 * delayInSeconds);
     }
 
-    @Override
-    public void onDroidSpeechRmsChanged(float rmsChangedValue) {
-
+    private void userSays(final String sentence, int delayInSeconds) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Message message = new Message(Long.toString(UUID.randomUUID().getLeastSignificantBits()),user,sentence);
+                messagesAdapter.addToStart(message, true);
+            }
+        }, 1000 * delayInSeconds);
     }
 
-    @Override
-    public void onDroidSpeechLiveResult(String liveSpeechResult) {
-        //System.out.println("CreateRecipeStep2.onDroidSpeechLiveResult  " + liveSpeechResult);
-    }
-
-    @Override
-    public void onDroidSpeechFinalResult(String finalSpeechResult) {
-        System.out.println("CreateRecipeStep2.onDroidSpeechFinalResult " + finalSpeechResult);
-        speakerbox.play(finalSpeechResult);
-    }
-
-    @Override
-    public void onDroidSpeechClosedByUser() {
-
-    }
-
-    @Override
-    public void onDroidSpeechError(String errorMsg) {
-        System.out.println("CreateRecipeStep2.onDroidSpeechError " + errorMsg);
-    }
-
-    @Override
-    public void onPermissionGranted() {
-
-    }
-
-    @Override
-    public void onPermissionDenied() {
-
-    }
-
-    @Override
-    public void OnSpeechRecognitionStarted() {
-
-    }
-
-    @Override
-    public void OnSpeechRecognitionStopped() {
-
-    }
-
-    @Override
-    public void OnSpeechRecognitionFinalResult(String s) {
-        System.out.println("CreateRecipeStep2.OnSpeechRecognitionFinalResult " + s);
-        speakerbox.play(s);
-    }
-
-    @Override
-    public void OnSpeechRecognitionCurrentResult(String s) {
-
-    }
-
-    @Override
-    public void OnSpeechRecognitionError(int i, String s) {
-        System.out.println("CreateRecipeStep2.OnSpeechRecognitionError " + s);
+    private void initAdapter() {
+        messagesAdapter = new MessagesListAdapter<>("0",imageLoader);
+        messagesList.setAdapter(messagesAdapter);
     }
 }
