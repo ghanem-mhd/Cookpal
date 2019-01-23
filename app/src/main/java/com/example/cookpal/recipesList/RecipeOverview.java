@@ -73,7 +73,8 @@ public class RecipeOverview extends AppCompatActivity implements TabLayout.BaseO
         }
 
         if (id == R.id.action_start_cooking){
-            //Todo: navigate to another view
+            Intent intent = new Intent(this, FollowRecipe.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
