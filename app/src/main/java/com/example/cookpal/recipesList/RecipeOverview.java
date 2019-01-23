@@ -1,25 +1,21 @@
 package com.example.cookpal.recipesList;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cookpal.R;
 import com.example.cookpal.models.RecipeDetails;
 import com.example.cookpal.utilities.RecipeFactory;
-
-import java.util.List;
+import com.squareup.picasso.Picasso;
 
 public class RecipeOverview extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener, View.OnClickListener {
 
@@ -27,23 +23,21 @@ public class RecipeOverview extends AppCompatActivity implements TabLayout.BaseO
     private TabLayout tabLayout;
     private TextView title;
     private RecipeDetails recipe;
+    private ImageView recipeImage;
 
     private FragmentManager fragmentManager;
     private boolean isIngredientsSelected;
-
-    private  RecyclerView.Adapter adapterIngredients;
-    private  RecyclerView.Adapter adapterSteps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_overview);
 
-
-        btnStartCooking = (Button) findViewById(R.id.btn_start_cooking);
-        tabLayout = (TabLayout) findViewById(R.id.tab);
+        btnStartCooking = findViewById(R.id.btn_start_cooking);
+        tabLayout = findViewById(R.id.tab);
         tabLayout.addOnTabSelectedListener(this);
-        title = (TextView) findViewById(R.id.title);
+        title = findViewById(R.id.title);
+        recipeImage = findViewById(R.id.img);
         recipe = RecipeFactory.getSalmonRecipe();
         title.setText(recipe.getRecipe().title);
         btnStartCooking.setOnClickListener(this);
@@ -51,6 +45,41 @@ public class RecipeOverview extends AppCompatActivity implements TabLayout.BaseO
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.fragment, new RecipeIngredientsFragment()).commit();
         isIngredientsSelected = true;
+
+        setupToolbar();
+
+
+        Picasso.get()
+                .load(R.drawable.recipe1)
+                .resize(900,600)
+                .into(recipeImage);
+    }
+
+    private void setupToolbar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        if (id == R.id.action_start_cooking){
+            //Todo: navigate to another view
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.recipe_overview, menu);
+        return true;
     }
 
     @Override
@@ -86,6 +115,6 @@ public class RecipeOverview extends AppCompatActivity implements TabLayout.BaseO
 
     @Override
     public void onClick(View view) {
-        //Todo: navigate to another view
+
     }
 }

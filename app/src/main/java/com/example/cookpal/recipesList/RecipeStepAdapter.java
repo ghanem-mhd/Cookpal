@@ -33,7 +33,6 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
     public void onBindViewHolder(@NonNull RecipeStepViewHolder recipeStepViewHolder, int i) {
         RecipeDetails.Step step = steps.get(i);
         recipeStepViewHolder.step.setText(step.getDescription());
-        recipeStepViewHolder.number.setText(""+step.getNumber());
         //Todo: set video resource for the snippet
         // recipeStepViewHolder.snippet
     }
@@ -69,7 +68,6 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
 
         public RecipeStepViewHolder(@NonNull View itemView) {
             super(itemView);
-            number = (TextView)itemView.findViewById(R.id.num);
             step = (TextView)itemView.findViewById(R.id.step);
             arrow = (ImageButton)itemView.findViewById(R.id.arr);
 
