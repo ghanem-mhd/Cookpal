@@ -1,72 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:src="@drawable/recipe1"
-        android:layout_marginTop="0dp"
-        />
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
 
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/img"
         android:layout_alignEnd="@id/img"
         android:layout_alignBottom="@id/img"
+        android:layout_toStartOf="@id/img"
         android:background="@drawable/horizontal_gradient" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
         android:text="Salmon Roasted in Button"
-        android:textAlignment="center"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_alignBottom="@+id/img"
         android:textColor="@color/colorAccentLight"
-        android:textSize="28sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"/>
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btn-start-cooking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="start cooking"
         android:layout_below="@id/img"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        />
-
-
-    <RelativeLayout
-        android:id="@+id/fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn-start-cooking"
-        android:layout_above="@id/tab"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="18dp">
-
-    </RelativeLayout>
+        android:text="start cooking"
+        android:visibility="gone" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/img"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="5dp"
-        android:layout_alignParentBottom="true"
-        >
+        android:layout_marginBottom="5dp">
 
         <android.support.design.widget.TabItem
             android:id="@+id/tab-ingredients"
@@ -81,5 +64,12 @@
             android:text="Steps" />
 
     </android.support.design.widget.TabLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab" />
+
 
 </RelativeLayout>

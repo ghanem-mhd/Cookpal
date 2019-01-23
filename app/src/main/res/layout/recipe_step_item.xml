@@ -1,65 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_folded"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
-    <RelativeLayout
-        android:id="@+id/item_folded"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/step"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:text="Preheat oven to 200° C Preheat to 200° C Preheat "
+        android:textSize="16sp"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/primary_text"
+        android:layout_toLeftOf="@id/arr" />
 
-        <TextView
-            android:id="@+id/num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10"
-            android:textSize="16sp"
-            android:textColor="@color/colorAccent"
-            />
+    <ImageButton
+        android:id="@+id/arr"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:src="@drawable/arrow_down"
+        android:layout_alignParentEnd="true"
+        android:background="@null"
+        android:backgroundTint="@color/list_separator"
 
-        <TextView
-            android:id="@+id/step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Preheat oven to 200° C Preheat to 200° C Preheat "
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
-            android:layout_toRightOf="@id/num"
-            android:layout_toLeftOf="@id/arr"
+        />
 
-            />
-        <ImageButton
-            android:id="@+id/arr"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:src="@drawable/arrow_down"
-            android:layout_alignParentEnd="true"
-            android:background="@null"
-            android:backgroundTint="@color/list_separator"
-
-            />
-
-        <VideoView
-            android:id="@+id/snippet"
-            android:layout_width="150dp"
-            android:layout_height="90dp"
-            android:layout_below="@id/step"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="15dp"
-            android:visibility="gone"
-            />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/list_separator"
-        android:layout_below="@id/item_folded"/>
+    <VideoView
+        android:id="@+id/snippet"
+        android:layout_width="150dp"
+        android:layout_height="90dp"
+        android:layout_below="@id/step"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        />
 
 </RelativeLayout>
