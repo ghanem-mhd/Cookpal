@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/step"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/arrow-down" />
+        app:srcCompat="@drawable/arrow_down" />
 
     <LinearLayout
         android:id="@+id/step-content"
@@ -79,7 +79,7 @@
                 android:id="@+id/arrow2"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
-                app:srcCompat="@drawable/arrow-up" />
+                app:srcCompat="@drawable/arrow_up" />
 
         </LinearLayout>
 

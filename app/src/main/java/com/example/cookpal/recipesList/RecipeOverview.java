@@ -31,8 +31,8 @@ public class RecipeOverview extends AppCompatActivity implements TabLayout.BaseO
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_overview);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+     //   Toolbar toolbar = findViewById(R.id.toolbar);
+      //  setSupportActionBar(toolbar);
 
         list = (RecyclerView) findViewById(R.id.list);
         btnStartCooking = (Button) findViewById(R.id.btn_start_cooking);

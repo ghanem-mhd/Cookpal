@@ -8,13 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="edit_text_style">
+        <item name="android:background">@drawable/edit_text_background</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingStart">15.5dp</item>
+        <item name="android:paddingEnd">15.5dp</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
