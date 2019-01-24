@@ -3,6 +3,7 @@ package com.example.cookpal.recipesList;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,13 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
     @Override
     public RecipesAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recipe_item, viewGroup, false);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RecipeOverview.class);
+                context.startActivity(intent);
+            }
+        });
         return new RecipesAdapter.RecipesAdapterViewHolder(v);
     }
 
@@ -102,15 +110,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
 
             authorImage = itemView.findViewById(R.id.recipe_item_author_image);
             authorName = itemView.findViewById(R.id.recipe_item_author_name);
-
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("On click Action");
-                    Intent intent = new Intent(context, RecipeOverview.class);
-                    context.startActivity(intent);
-                }
-            });
         }
     }
 }
