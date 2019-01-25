@@ -82,18 +82,18 @@ public class RecipesListActivity extends AppCompatActivity {
         recipe2.setCat2("Dinner");
         recipe2.setAuthorImageId(R.drawable.user2);
         recipe2.setAuthorName("Created by Mhd");
-        recipes.add(recipe2);
+        //recipes.add(recipe2);
 
 
         Recipe recipe3 = new Recipe();
-        recipe3.setTitle("Cheesy Breakfast Egg and Polenta Casserole");
-        recipe3.setImageId(R.drawable.recipe3);
-        recipe3.setTime("30 minutes");
-        recipe3.setCat1("Pla Pla");
-        recipe3.setCat2("Dinner");
-        recipe3.setAuthorImageId(R.drawable.user1);
-        recipe3.setAuthorName("Created by Alex");
-        //recipes.add(recipe3);
+        recipe3.setTitle("Hummus");
+        recipe3.setImageId(R.drawable.hummus);
+        recipe3.setTime("10 minutes");
+        recipe3.setCat1("Side Dish");
+        recipe3.setCat2("Breakfast");
+        recipe3.setAuthorImageId(R.drawable.user3);
+        recipe3.setAuthorName("Created by Anxh");
+        recipes.add(recipe3);
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -103,6 +103,4 @@ public class RecipesListActivity extends AppCompatActivity {
         recipesRecyclerView.setLayoutManager(linearLayoutManager);
         recipesRecyclerView.setAdapter(recipesAdapter);
     }
-
-
 }

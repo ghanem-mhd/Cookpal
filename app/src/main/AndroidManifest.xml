@@ -17,6 +17,7 @@
         <activity android:name=".followRecipe.FollowRecipe"/>
         <activity android:name=".createRecipe.CreateRecipeStep2" />
         <activity android:name=".createRecipe.CreateRecipeStep1" />
+        <activity android:name=".createRecipe.CreateRecipeStep3" />
         <activity android:name=".recipesList.RecipeOverview" />
         <activity android:name=".recipesList.RecipesListActivity">
             <intent-filter>

@@ -17,9 +17,11 @@ import java.util.List;
 public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.RecipeStepViewHolder>{
 
     private List<RecipeDetails.Step> steps;
+    private boolean isEditable = false;
 
-    public RecipeStepAdapter(List<RecipeDetails.Step> steps){
+    public RecipeStepAdapter(List<RecipeDetails.Step> steps, boolean isEditable){
         this.steps = steps;
+        this.isEditable = isEditable;
     }
 
     @NonNull
@@ -33,8 +35,6 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
     public void onBindViewHolder(@NonNull RecipeStepViewHolder recipeStepViewHolder, int i) {
         RecipeDetails.Step step = steps.get(i);
         recipeStepViewHolder.step.setText(step.getDescription());
-        //Todo: set video resource for the snippet
-        // recipeStepViewHolder.snippet
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.cookpal.createRecipe;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -36,7 +37,9 @@ public class CreateRecipeStep2 extends AppCompatActivity {
     protected ImageLoader imageLoader;
     protected MessagesListAdapter<Message> messagesAdapter;
 
-    private User app,user;
+    private User app, user;
+
+    private MediaPlayer mPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +48,8 @@ public class CreateRecipeStep2 extends AppCompatActivity {
 
         speakerbox = new Speakerbox(getApplication());
 
-        imageLoader = new ImageLoader() {
-            @Override
-            public void loadImage(ImageView imageView, String url, Object payload) {
-                if (url.equals("1")){
-                    imageView.setImageResource(R.drawable.user1);
-                }else {
-                    imageView.setImageResource(R.drawable.user2);
-                }
-            }
-        };
-
-        app = new User("1","Cookpal","1",true);
-        user = new User("0","Wei","0",true);
+        app = new User("1", "Cookpal", "1", true);
+        user = new User("0", "Wei", "0", true);
 
         findViews();
 
@@ -65,14 +57,97 @@ public class CreateRecipeStep2 extends AppCompatActivity {
 
         setupToolbar();
 
-        initAdapter();
+        playSound(1,1);
 
-        appSays("Hello I am your cooking assistance I will help you cooking this recipe", 2);
-        appSays("How much salt did you add", 10);
-        userSays("I have added 10 gram of salt",12);
-        appSays("Okay",13);
+        playSound(2,6);
+
+        playSound(3,12);
+
+        displayUserMessage("Okay then",17);
+
+        playSound(4,30);
+
+        displayUserMessage("Half tablespoon",34);
+
+        playSound(5,50);
+
+        displayUserMessage("1 tablespoon",54);
+
+        playSound(6,60);
+
+        playSound(7,75);
+
+        displayUserMessage("3 tablespoon",79);
+
+        playSound(8,95);
+
+        playSound(9,105);
+
+        displayUserMessage("Half teaspoon",104);
+
+        playSound(10,120);
+
+        displayUserMessage("Yes it is cooked",124);
+
+        playSound(11,127);
+
+        displayUserMessage("100 gram",130);
+
+        playSound(13,140);
+
+        displayUserMessage("two tablespoon, Mark this step as optional",143);
+
+        playSound(14,148);
+
+        playSound(9,155);
+
+        displayUserMessage("I am done cooking this recipe",175);
+
+        playSound(15,179);
+
+        playSound(16,185);
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                CreateRecipeStep3.open(CreateRecipeStep2.this.getApplicationContext());
+            }
+        }, 1000 * 188);
     }
 
+    private void playSound(final int sentenceID, int delayInSeconds) {
+        final String sentence = appSentences[sentenceID];
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                displayAppMessage(sentence);
+                mPlayer = MediaPlayer.create(getApplicationContext(), appSentencesSounds[sentenceID]);
+                mPlayer.start();
+            }
+        }, 1000 * delayInSeconds);
+    }
+
+    private void displayUserMessage(final String messageString, int delayInSeconds){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                displayUserMessage(messageString);
+            }
+        }, 1000 * delayInSeconds);
+    }
+
+    private void displayAppMessage(String messageString){
+        Message message = new Message(Long.toString(UUID.randomUUID().getLeastSignificantBits()), app, messageString);
+        messagesAdapter.addToStart(message, true);
+    }
+
+    private void displayUserMessage(String messageString){
+        Message message = new Message(Long.toString(UUID.randomUUID().getLeastSignificantBits()), user, messageString);
+        messagesAdapter.addToStart(message, true);
+    }
 
 
     private void findViews() {
@@ -82,6 +157,17 @@ public class CreateRecipeStep2 extends AppCompatActivity {
     }
 
     private void setUpViews() {
+        imageLoader = new ImageLoader() {
+            @Override
+            public void loadImage(ImageView imageView, String url, Object payload) {
+                if (url.equals("1")) {
+                    imageView.setImageResource(R.drawable.test);
+                } else {
+                    imageView.setImageResource(R.drawable.user2);
+                }
+            }
+        };
+
         int[] colors = {
                 ContextCompat.getColor(this, R.color.color1),
                 ContextCompat.getColor(this, R.color.color2),
@@ -91,6 +177,9 @@ public class CreateRecipeStep2 extends AppCompatActivity {
         };
         recognitionProgressView.setColors(colors);
         recognitionProgressView.play();
+
+        messagesAdapter = new MessagesListAdapter<>("0", imageLoader);
+        messagesList.setAdapter(messagesAdapter);
     }
 
     public static void open(Context context) {
@@ -119,6 +208,10 @@ public class CreateRecipeStep2 extends AppCompatActivity {
     @Override
     protected void onStop() {
         cameraKitView.onStop();
+        speakerbox.stop();
+        if (mPlayer != null){
+            mPlayer.stop();
+        }
         super.onStop();
     }
 
@@ -131,7 +224,7 @@ public class CreateRecipeStep2 extends AppCompatActivity {
     private void setupToolbar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Recording new recipe");
+            actionBar.setTitle("Recording Hummus");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -142,6 +235,10 @@ public class CreateRecipeStep2 extends AppCompatActivity {
         if (id == android.R.id.home) {
             finish();
             return true;
+        }
+
+        if (id == R.id.action_finish) {
+            CreateRecipeStep3.open(this);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -158,8 +255,7 @@ public class CreateRecipeStep2 extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Message message = new Message(Long.toString(UUID.randomUUID().getLeastSignificantBits()),app,sentence);
-                messagesAdapter.addToStart(message, true);
+                displayAppMessage(sentence);
                 speakerbox.play(sentence);
             }
         }, 1000 * delayInSeconds);
@@ -170,14 +266,29 @@ public class CreateRecipeStep2 extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Message message = new Message(Long.toString(UUID.randomUUID().getLeastSignificantBits()),user,sentence);
-                messagesAdapter.addToStart(message, true);
+            displayUserMessage(sentence);
             }
         }, 1000 * delayInSeconds);
     }
 
-    private void initAdapter() {
-        messagesAdapter = new MessagesListAdapter<>("0",imageLoader);
-        messagesList.setAdapter(messagesAdapter);
-    }
+    String[] appSentences = new String[]{"",
+            "Hello I am your cookpal assistance, I will help you to create Hummus recipe",
+            "Put your phone in a way where i can see what you are doing",
+            "No not this way try to put your phone to 90 degree angle",
+            "You added tahini into the blender, how much did you add?",
+            "You added lemon into the blender, how much did you add?",
+            "You processed the mixture for 20 seconds",
+            "You added olive oil into the blender, how much did you add?",
+            "You added salt into the blender, how much did you add?",
+            "You processed the mixture for 20 seconds",
+            "You added chickpeas into the blender, is this chickpeas cooked?",
+            "okay, how much did you add",
+            "You processed the mixture for 20 seconds",
+            "You added water to the mixture, how much did you add?",
+            "Okay last step marked as optional",
+            "Okay I'm generating the recipe",
+            "Hummus recipe is ready"};
+
+    int [] appSentencesSounds = new int []{0,R.raw.s1,R.raw.s2,R.raw.s3,R.raw.s4,R.raw.s5,R.raw.s6,R.raw.s7,R.raw.s8,
+            R.raw.s9,R.raw.s10,R.raw.s11,R.raw.s12,R.raw.s13,R.raw.s14,R.raw.s15,R.raw.s16};
 }

@@ -4,13 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_start_cooking"
-        android:title="Start"
+        android:id="@+id/share"
+        android:title="Share"
+        android:icon="@drawable/ic_share_black_24dp"
         app:showAsAction="ifRoom|collapseActionView" />
-
-    <item
-        android:id="@+id/taskNotificationsBtn"
-        app:showAsAction="never"
-        android:title="Test"
-        tools:ignore="HardcodedText" />
 </menu>

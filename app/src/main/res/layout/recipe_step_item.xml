@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Preheat oven to 200° C Preheat to 200° C Preheat "
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:layout_alignParentStart="true"
         android:textColor="@color/primary_text"
         android:layout_toLeftOf="@id/arr" />

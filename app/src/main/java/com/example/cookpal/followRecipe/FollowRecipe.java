@@ -1,7 +1,10 @@
 package com.example.cookpal.followRecipe;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.design.widget.FloatingActionButton;
@@ -13,10 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.example.cookpal.R;
 import com.example.cookpal.createRecipe.CreateRecipeStep2;
+import com.example.cookpal.models.Message;
 import com.example.cookpal.models.RecipeDetails;
 import com.example.cookpal.utilities.RecipeFactory;
 import com.github.zagum.speechrecognitionview.RecognitionProgressView;
@@ -25,6 +31,8 @@ import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
 
+import java.util.UUID;
+
 
 public class FollowRecipe extends AppCompatActivity implements OnSeekChangeListener {
 
@@ -32,7 +40,8 @@ public class FollowRecipe extends AppCompatActivity implements OnSeekChangeListe
     private IndicatorSeekBar seekBar;
     private TextView stepDescription;
     private RecipeDetails recipe;
-
+    private MediaPlayer mPlayer;
+    private ImageView icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,7 @@ public class FollowRecipe extends AppCompatActivity implements OnSeekChangeListe
         seekBar = findViewById(R.id.seekbar);
         seekBar.setOnSeekChangeListener(this);
         stepDescription = findViewById(R.id.step_desc);
+        icon = findViewById(R.id.icon);
 
         recipe = RecipeFactory.getSalmonRecipe();
 
@@ -50,25 +60,43 @@ public class FollowRecipe extends AppCompatActivity implements OnSeekChangeListe
         initSpeechAnimation();
 
         setupToolbar();
+
+        playSound(R.raw.ss1,1,1);
+
+        playSound(R.raw.ss2,10,2);
+
+        playSound(R.raw.ss3,25,3);
+
+        playSound(R.raw.ss4,40,4);
+
+        playSound(R.raw.ss5,55,8);
+
+        playVideo(57);
+    }
+
+    private void playVideo(int delayInSeconds) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                icon.setVisibility(View.GONE);
+                VideoView videoView = findViewById(R.id.snippet);
+                Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.video1);
+                videoView.setVideoURI(uri);
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.setVolume(0,0);
+                    }
+                });
+                videoView.start();
+            }
+        }, 1000 * delayInSeconds);
     }
 
     private void initSpeechAnimation(){
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         RecognitionProgressView recognitionProgressView = (RecognitionProgressView) findViewById(R.id.recognition_view);
-        recognitionProgressView.setSpeechRecognizer(speechRecognizer);
-        recognitionProgressView.setRecognitionListener(new RecognitionListenerAdapter() {
-            @Override
-            public void onResults(Bundle results) {
-                ///showResults(results);
-            }
-        });
-
         recognitionProgressView.play();
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        speechRecognizer.startListening(intent);
-
         int[] colors = {
                 ContextCompat.getColor(this, R.color.color1),
                 ContextCompat.getColor(this, R.color.color2),
@@ -77,9 +105,6 @@ public class FollowRecipe extends AppCompatActivity implements OnSeekChangeListe
                 ContextCompat.getColor(this, R.color.color5)
         };
         recognitionProgressView.setColors(colors);
-
-        int[] heights = {60, 76, 58, 80, 55};
-        recognitionProgressView.setBarMaxHeightsInDp(heights);
     }
 
     @Override
@@ -101,7 +126,7 @@ public class FollowRecipe extends AppCompatActivity implements OnSeekChangeListe
     private void setupToolbar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Recipe steps");
+            actionBar.setTitle("Hummus Recipe steps");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -124,5 +149,18 @@ public class FollowRecipe extends AppCompatActivity implements OnSeekChangeListe
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.following_recipe, menu);
         return true;
+    }
+
+    private void playSound(final int sentenceID, final int delayInSeconds, final int step) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (step != -0)
+                    seekBar.setProgress(step);
+                mPlayer = MediaPlayer.create(getApplicationContext(), sentenceID);
+                mPlayer.start();
+            }
+        }, 1000 * delayInSeconds);
     }
 }

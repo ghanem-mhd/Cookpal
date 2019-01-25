@@ -17,6 +17,8 @@ import com.example.cookpal.utilities.RecipeFactory;
 
 public class RecipeIngredientsFragment extends Fragment {
 
+    public boolean isEditable = false;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -24,7 +26,7 @@ public class RecipeIngredientsFragment extends Fragment {
         RecyclerView list = (RecyclerView) getView().findViewById(R.id.list);
 
         RecipeDetails recipe = RecipeFactory.getSalmonRecipe();
-        RecyclerView.Adapter adapter = new RecipeIngredientAdapter(recipe.getIngredients());
+        RecyclerView.Adapter adapter = new RecipeIngredientAdapter(recipe.getIngredients(),isEditable);
 
         list.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
